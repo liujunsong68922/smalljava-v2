@@ -1,5 +1,7 @@
 package com.smalljava.l5_expression.analyse.plugin.var;
 
+import com.smalljava.common.logging.Logger;
+import com.smalljava.common.logging.LoggerFactory;
 import com.smalljava.l5_expression.analyse.AstOperAndPos;
 import com.smalljava.l5_expression.analyse.plugin.DefaultIPluginImplement;
 import com.smalljava.l5_expression.vo.AbstractAST;
@@ -12,7 +14,7 @@ import com.smalljava.l5_expression.vo.var.NewOperElement;
  *
  */
 public class NewObjectOperPlugin extends DefaultIPluginImplement {
-
+	Logger logger = LoggerFactory.getLogger(NewObjectOperPlugin.class);
 	@Override
 	public AbstractAST analyse(String strcode) {
 		strcode = this.trimReturnAndSpace(strcode);
@@ -23,10 +25,11 @@ public class NewObjectOperPlugin extends DefaultIPluginImplement {
 		//char char1 = strcode.charAt(0);
 		if (strcode.startsWith("new ")) {
 			// 判断其中有无其他的运算符
-			String opers[] = new String[] { "+", "-", "*", "/", ">=", "==", "<=", ">", "<", "&&", "||", "!", "(", ")" };
+			String opers[] = new String[] { "+", "-", "*", "/", ">=", "==", "<=", ">", "<", "&&", "||", "!" };
 			AstOperAndPos oap = getFirstOperCode(strcode, opers);
 			if (oap != null) {
 				// 有任何一个运算符，不处理
+				logger.info("find higer oper,return null");
 				return null;
 			}
 			

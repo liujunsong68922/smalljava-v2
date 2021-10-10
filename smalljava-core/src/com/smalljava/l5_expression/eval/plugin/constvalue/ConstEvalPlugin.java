@@ -16,10 +16,7 @@ public class ConstEvalPlugin implements IExpressionEval {
 	 */
 	@Override
 	public VarValue eval(RootAST root, IVarTable vartable, IClassTable classtable) {
-		if(root == null) {
-			return null;
-		}
-		//返回数值常量
+ 		//返回数值常量
 		if(root instanceof ConstNumberElement) {
 			//强制转型
 			ConstNumberElement const1 = (ConstNumberElement)root;

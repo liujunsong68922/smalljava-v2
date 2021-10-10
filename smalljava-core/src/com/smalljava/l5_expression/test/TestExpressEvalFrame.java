@@ -218,6 +218,8 @@ class TestMainFrame extends JFrame {
 					IClassTable classtable = new ClassTableImpl();
 					IVarTable vartable=l4;
 					vartable.defineVar("i","int");
+					vartable.defineVar("map1", "HashMap");
+					
 					ExpressionEval eval = new ExpressionEval();
 					VarValue vv = eval.eval(root, vartable, classtable);
 					if(vv == null) {

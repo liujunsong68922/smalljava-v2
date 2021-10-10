@@ -7,6 +7,7 @@ import com.smalljava.common.logging.Logger;
 import com.smalljava.common.logging.LoggerFactory;
 import com.smalljava.l5_expression.eval.plugin.atom.AtomEvalPlugin;
 import com.smalljava.l5_expression.eval.plugin.constvalue.ConstEvalPlugin;
+import com.smalljava.l5_expression.eval.plugin.obj.ObjectCallEvalPlugin;
 import com.smalljava.l5_expression.eval.plugin.one.LogicNotPlugin;
 import com.smalljava.l5_expression.eval.plugin.two.LogicAndOperEvalPlugin;
 import com.smalljava.l5_expression.eval.plugin.two.LogicEqualsOperEvalPlugin;
@@ -28,6 +29,7 @@ import com.smalljava.l5_expression.vo.MiddleAST;
 import com.smalljava.l5_expression.vo.RootAST;
 import com.smalljava.l5_expression.vo.atom.AtomElement;
 import com.smalljava.l5_expression.vo.constvalue.AbstractConstDataElement;
+import com.smalljava.l5_expression.vo.obj.ObjectCallOperElement;
 import com.smalljava.l5_expression.vo.one.LogicNotOperElement;
 import com.smalljava.l5_expression.vo.two.DualOperDataOperElement;
 import com.smalljava.l5_expression.vo.var.NewOperElement;
@@ -122,11 +124,16 @@ public class ExpressionEval implements IExpressionEval {
 		}
 
 		// Part4 对象调用的部分
-		// TODO:待补充这部分内容
+		if (root instanceof ObjectCallOperElement) {
+			ObjectCallOperElement objectcall = (ObjectCallOperElement) root;
+			//调用对象调用执行器
+			ObjectCallEvalPlugin objcalleval = new ObjectCallEvalPlugin();
+			return objcalleval.eval(root, vartable, classtable);
+		}
 		
 		// Part5 如果执行都这里，说明上面的逻辑都没有命中
 		// 这种情况下是属于执行错误
-		logger.error("---->执行出错了。");
+		logger.error("---->执行出错了。{"+root.getShowString(0)+"}");
 		root.show(0);
 		return null;
 	}
