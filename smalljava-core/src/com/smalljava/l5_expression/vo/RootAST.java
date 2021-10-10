@@ -2,6 +2,9 @@ package com.smalljava.l5_expression.vo;
 
 import java.util.UUID;
 
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeNode;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -179,6 +182,79 @@ public class RootAST extends AbstractAST {
 			}
 		}
 		return sret;
+
+	}	
+	public DefaultMutableTreeNode toTreeNode(int ilevel) {
+		DefaultMutableTreeNode retTreeNode = new DefaultMutableTreeNode("");
+		if (this.getChildren() == null) {
+			return retTreeNode;
+		}
+
+		String blockname = this.getClass().getSimpleName();
+		String strleft = "";
+		for (int i = 0; i < ilevel; i++) {
+			strleft += "    ";
+		}
+
+		String sinfo = this.strexpression;
+		if (this instanceof DualOperDataOperElement) {
+			DualOperDataOperElement e1 = (DualOperDataOperElement) this;
+			sinfo = e1.getOpercode();
+		}
+		if (this instanceof VarDataElement) {
+			VarDataElement var = (VarDataElement) this;
+			sinfo = var.getVarname();
+		}
+		if (this.getChildren().size() == 0) {
+			if (this instanceof AbstractConstDataElement) {
+				AbstractConstDataElement constdata = (AbstractConstDataElement) this;
+				logger.info(strleft + "---->" + blockname + ":" + constdata.getDatavalue());
+				retTreeNode= new DefaultMutableTreeNode  (strleft + "---->" + blockname + ":" + constdata.getDatavalue());
+			} else if (this instanceof VarDataElement) {
+				VarDataElement var = (VarDataElement) this;
+				logger.info(strleft + "---->" + blockname + ":" + var.getVarname());
+				retTreeNode = new DefaultMutableTreeNode(strleft + "---->" + blockname + ":" + var.getVarname());
+			} else if (this instanceof VarDefineOperElement) {
+				VarDefineOperElement def = (VarDefineOperElement) this;
+				logger.info(strleft + "---->" + blockname + ":" + def.getDatatype() + " " + def.getVarname());
+				retTreeNode = new DefaultMutableTreeNode (strleft + "---->" + blockname + ":" + def.getDatatype() + " " + def.getVarname());
+			} else if (this instanceof AbstractSingleOperDataOperElement) {
+				AbstractSingleOperDataOperElement se = (AbstractSingleOperDataOperElement) this;
+				logger.info(strleft + "---->" + blockname + ":" + se.getOpercode());
+				retTreeNode = new DefaultMutableTreeNode (strleft + "---->" + blockname + ":" + se.getOpercode());
+			}
+
+			else {
+				logger.info(strleft + "no child---->" + blockname + ":" + sinfo);
+				//sretnode += "\r\n";
+				retTreeNode = new DefaultMutableTreeNode (strleft + "no child---->" + blockname + ":" + sinfo);
+			}
+			return retTreeNode;
+		} else {
+			if (this instanceof AbstractSingleOperDataOperElement) {
+				AbstractSingleOperDataOperElement se = (AbstractSingleOperDataOperElement) this;
+				logger.info(strleft + "---->" + blockname + ":" + se.getOpercode());
+				//sretnode +="\r\n";
+				retTreeNode = new DefaultMutableTreeNode(strleft + "---->" + blockname + ":" + se.getOpercode());
+			} else {
+				logger.info(strleft + "---->" + blockname + ":" + sinfo);
+				//sretnode +="\r\n";
+				retTreeNode =new DefaultMutableTreeNode(strleft + "---->" + blockname + ":" + sinfo);
+			}
+		}
+
+		for (RootAST child : this.getChildren()) {
+			if (child != null) {
+				//String schild = child.getShowString(ilevel + 1);
+				DefaultMutableTreeNode childnode = child.toTreeNode(ilevel+1);
+				retTreeNode.add(childnode);
+			} else {
+				logger.info("child is null" + sinfo);
+				DefaultMutableTreeNode childnode = new DefaultMutableTreeNode("child is null."+sinfo);
+				retTreeNode.add(childnode);
+			}
+		}
+		return retTreeNode;
 
 	}	
 }

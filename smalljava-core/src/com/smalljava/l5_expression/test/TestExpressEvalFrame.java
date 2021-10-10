@@ -14,6 +14,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeNode;
 
 import com.smalljava.l5_expression.analyse.ExpressionASTAnalyse;
 import com.smalljava.l5_expression.vo.RootAST;
@@ -45,9 +48,12 @@ class TestMainFrame extends JFrame {
 	// 把定义的JTextArea放到JScrollPane里面去
 	static JScrollPane scroll = new JScrollPane(asttree);
 
+	static JPanel treepanel = new JPanel();
+	static JScrollPane tree = new JScrollPane(treepanel);
+	
 	public TestMainFrame() {
 		this.setTitle("[SmallJava]: Test Main Frame");
-		this.setBounds(300, 60, 800, 600);
+		this.setBounds(300, 60, 800, 630);
 		this.setLayout(null);
 		this.add(label1);
 		Font font1 = new Font("Times New Roman Italic", Font.BOLD, 20);
@@ -72,6 +78,12 @@ class TestMainFrame extends JFrame {
 		scroll.setBorder(BorderFactory.createLineBorder(Color.red, 1));
 		scroll.setBounds(10, 185, 760, 200);
 
+		tree.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		tree.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		this.add(tree);
+		tree.setBorder(BorderFactory.createLineBorder(Color.red, 1));
+		tree.setBounds(10, 390, 700, 200);
+		
 		// add buttonclick1
 		this.addButtonClick1();
 
@@ -119,7 +131,6 @@ class TestMainFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				TestMainFrame.sourcecode.setText(TestFrameButtonPanel.stext6);
-
 			}
 		});
 
@@ -149,6 +160,16 @@ class TestMainFrame extends JFrame {
 					String s1 = root.getShowString(0);
 					System.out.println(s1);
 					TestMainFrame.asttree.setText(s1);
+					
+					DefaultMutableTreeNode node = root.toTreeNode(0);
+					JTree tree = new JTree(node);
+					//TestMainFrame.rootnode.add(tree);
+					TestMainFrame.treepanel.removeAll();
+					TestMainFrame.treepanel.add(tree);
+					tree.setVisible(true);
+					TestMainFrame.treepanel.validate();
+					TestMainFrame.treepanel.repaint();
+					System.out.println("create tree ok.");
 				}
 
 			}
