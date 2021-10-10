@@ -105,4 +105,80 @@ public class RootAST extends AbstractAST {
 		}
 
 	}
+	
+	public String getShowString(int ilevel) {
+		String sret = "";
+		if (this.getChildren() == null) {
+			return sret;
+		}
+
+		String blockname = this.getClass().getSimpleName();
+		String strleft = "";
+		for (int i = 0; i < ilevel; i++) {
+			strleft += "    ";
+		}
+
+		String sinfo = this.strexpression;
+		if (this instanceof DualOperDataOperElement) {
+			DualOperDataOperElement e1 = (DualOperDataOperElement) this;
+			sinfo = e1.getOpercode();
+		}
+		if (this instanceof VarDataElement) {
+			VarDataElement var = (VarDataElement) this;
+			sinfo = var.getVarname();
+		}
+		if (this.getChildren().size() == 0) {
+			if (this instanceof AbstractConstDataElement) {
+				AbstractConstDataElement constdata = (AbstractConstDataElement) this;
+				logger.info(strleft + "---->" + blockname + ":" + constdata.getDatavalue());
+				sret +="\r\n";
+				sret += (strleft + "---->" + blockname + ":" + constdata.getDatavalue());
+			} else if (this instanceof VarDataElement) {
+				VarDataElement var = (VarDataElement) this;
+				logger.info(strleft + "---->" + blockname + ":" + var.getVarname());
+				sret +="\r\n";
+				sret +=(strleft + "---->" + blockname + ":" + var.getVarname());
+			} else if (this instanceof VarDefineOperElement) {
+				VarDefineOperElement def = (VarDefineOperElement) this;
+				logger.info(strleft + "---->" + blockname + ":" + def.getDatatype() + " " + def.getVarname());
+				sret += "\r\n";
+				sret += (strleft + "---->" + blockname + ":" + def.getDatatype() + " " + def.getVarname());
+			} else if (this instanceof AbstractSingleOperDataOperElement) {
+				AbstractSingleOperDataOperElement se = (AbstractSingleOperDataOperElement) this;
+				logger.info(strleft + "---->" + blockname + ":" + se.getOpercode());
+				sret += "\r\n";
+				sret += (strleft + "---->" + blockname + ":" + se.getOpercode());
+			}
+
+			else {
+				logger.info(strleft + "no child---->" + blockname + ":" + sinfo);
+				sret += "\r\n";
+				sret += (strleft + "no child---->" + blockname + ":" + sinfo);
+			}
+			return sret;
+		} else {
+			if (this instanceof AbstractSingleOperDataOperElement) {
+				AbstractSingleOperDataOperElement se = (AbstractSingleOperDataOperElement) this;
+				logger.info(strleft + "---->" + blockname + ":" + se.getOpercode());
+				sret +="\r\n";
+				sret +=(strleft + "---->" + blockname + ":" + se.getOpercode());
+			} else {
+				logger.info(strleft + "---->" + blockname + ":" + sinfo);
+				sret +="\r\n";
+				sret +=(strleft + "---->" + blockname + ":" + sinfo);
+			}
+		}
+
+		for (RootAST child : this.getChildren()) {
+			if (child != null) {
+				String schild = child.getShowString(ilevel + 1);
+				sret += schild;
+			} else {
+				logger.info("child is null" + sinfo);
+				sret +="\r\n"+("child is null" + sinfo);
+			}
+		}
+		return sret;
+
+	}	
 }
