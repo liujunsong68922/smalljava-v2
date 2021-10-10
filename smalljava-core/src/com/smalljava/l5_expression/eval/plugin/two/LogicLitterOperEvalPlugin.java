@@ -16,12 +16,13 @@ import com.smalljava.l9_space.vartable.IVarTable;
 
 /**
  * MEMO 执行加法运算
+ * 
  * @author liujunsong
  *
  */
 public class LogicLitterOperEvalPlugin implements IExpressionEval {
 	private Logger logger = LoggerFactory.getLogger(LogicLitterOperEvalPlugin.class);
-	
+
 	@Override
 	public VarValue eval(RootAST root, IVarTable vartable, IClassTable classtable) {
 		if (root == null || vartable == null || classtable == null) {
@@ -47,31 +48,50 @@ public class LogicLitterOperEvalPlugin implements IExpressionEval {
 					logger.error("程序逻辑错误，左操作对象类型为null");
 					return null;
 				}
+				logger.info("leftvar vartype:" + leftvar.getVartype());
 				if (leftvar.getVartype().equals("int")) {
 					IntegerValue intoper = new IntegerValue(leftvar.getVarsvalue());
-					intoper.doLitter(rightvar.getVarsvalue());
-					return intoper;
+					logger.info("int右面操作数:" + rightvar.getVarsvalue());
+					boolean b1 = intoper.doLitter(rightvar.getVarsvalue());
+					VarValue varvalue1 = new VarValue();
+					varvalue1.setVarname("");
+					varvalue1.setVartype("boolean");
+					varvalue1.setVarsvalue("" + b1);
+					return varvalue1;
 				}
 				if (leftvar.getVartype().equals("long")) {
 					LongValue longoper = new LongValue(leftvar.getVarsvalue());
 					// 把第二个节点的字符串传进去
 					logger.info("Long右面操作数:" + rightvar.getVarsvalue());
-					longoper.doLitter(rightvar.getVarsvalue());
-					return longoper;
+					boolean b2 = longoper.doLitter(rightvar.getVarsvalue());
+					VarValue varvalue2 = new VarValue();
+					varvalue2.setVarname("");
+					varvalue2.setVartype("boolean");
+					varvalue2.setVarsvalue("" + b2);
+
+					return varvalue2;
 				}
 				if (leftvar.getVartype().equals("float")) {
 					FloatValue floatoper = new FloatValue(leftvar.getVarsvalue());
 					logger.info("Float右面操作数:" + rightvar.getVarsvalue());
-					floatoper.doLitter(rightvar.getVarsvalue());
-					return floatoper;
+					boolean b3 = floatoper.doLitter(rightvar.getVarsvalue());
+					VarValue varvalue3 = new VarValue();
+					varvalue3.setVarname("");
+					varvalue3.setVartype("boolean");
+					varvalue3.setVarsvalue("" + b3);
+					return varvalue3;
 				}
 				if (leftvar.getVartype().equals("double")) {
 					DoubleValue doubleoper = new DoubleValue(leftvar.getVarsvalue());
 					;
 					// 把第二个节点的字符串传进去
 					logger.info("Double右面操作数:" + rightvar.getVarsvalue());
-					doubleoper.doLitter(rightvar.getVarsvalue());
-					return doubleoper;
+					boolean b4 = doubleoper.doLitter(rightvar.getVarsvalue());
+					VarValue varvalue4 = new VarValue();
+					varvalue4.setVarname("");
+					varvalue4.setVartype("boolean");
+					varvalue4.setVarsvalue("" + b4);
+					return varvalue4;
 				}
 				logger.error("【ERROR】< 操作遇到了不支持的数据类型：" + leftvar.getVartype());
 				return null;

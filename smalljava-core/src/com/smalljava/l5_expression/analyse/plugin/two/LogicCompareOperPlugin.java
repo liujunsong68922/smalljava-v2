@@ -1,7 +1,10 @@
 package com.smalljava.l5_expression.analyse.plugin.two;
 
+import com.smalljava.common.logging.Logger;
+import com.smalljava.common.logging.LoggerFactory;
 import com.smalljava.l5_expression.analyse.AstOperAndPos;
 import com.smalljava.l5_expression.analyse.plugin.DefaultIPluginImplement;
+import com.smalljava.l5_expression.analyse.plugin.var.VarSetOperPlugin;
 import com.smalljava.l5_expression.vo.AbstractAST;
 import com.smalljava.l5_expression.vo.MiddleAST;
 import com.smalljava.l5_expression.vo.RootAST;
@@ -13,22 +16,27 @@ import com.smalljava.l5_expression.vo.two.DualOperDataOperElement;
  *
  */
 public class LogicCompareOperPlugin extends DefaultIPluginImplement{
-
+	Logger logger = LoggerFactory.getLogger(LogicCompareOperPlugin.class);
+	
 	@Override
 	public AbstractAST analyse(String strcode) {
-		String opers[] = new String[] {">","<",">=","<=","==","!="};
+		logger.info("enter LogicCompareOperPlugin.analyse.");
+		
+		String opers[] = new String[] {">=","<=",">","<","==","!="};
 		AstOperAndPos oap = getFirstOperCode(strcode,opers);
 		
 		if(oap==null) {
 			//查找逻辑比较符号失败
+			logger.info("Cannot find opers");
 			return null;
 		}
 		
-		String highopers[] = new String[] {"&&","||","="};
+		String highopers[] = new String[] {"&&","||","!"};
 		AstOperAndPos highoap = getFirstOperCode(strcode,highopers);
 		
 		if(highoap!=null) {
 			//存在计算优先级更低的运算符，返回
+			logger.info("find high oper,return.");
 			return null;
 		}
 		
@@ -45,6 +53,7 @@ public class LogicCompareOperPlugin extends DefaultIPluginImplement{
 		//leftstring = trimReturnAndSpace(leftstring);
 		if(leftstring.equals("")) {
 			//左操作数不可为空
+			logger.error("left var is null, return.");
 			return null;
 		}else {
 			//判断结束字符串的合法性
@@ -56,12 +65,14 @@ public class LogicCompareOperPlugin extends DefaultIPluginImplement{
 				//这些是合法字符串，通过
 			}else {
 				//左操作数结束不合法，不处理
+				logger.error("left var is not valid. return null."+ leftstring);
 				return null;
 			}
 		}
 		//检查右操作数是否合法
 		if(rightString.equals("")) {
 			//左操作数不可为空
+			logger.error("rightstring is empty,return null");
 			return null;
 		}else {
 			char firstchar = rightString.charAt(0);
@@ -72,6 +83,7 @@ public class LogicCompareOperPlugin extends DefaultIPluginImplement{
 					//这些是合法字符串，通过
 				}else {
 					//左操作数结束不合法，不处理
+					logger.error("rightstring is invalid,return null."+rightString);
 					return null;
 				}
 		}

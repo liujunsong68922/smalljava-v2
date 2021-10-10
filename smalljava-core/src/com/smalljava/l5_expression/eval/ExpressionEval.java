@@ -105,6 +105,7 @@ public class ExpressionEval implements IExpressionEval {
 		if (root instanceof DualOperDataOperElement) {
 			DualOperDataOperElement oper = (DualOperDataOperElement) root;
 			// 不同的运算符，调用不同的处理器
+			logger.info("opercode:"+oper.getOpercode());
 			IExpressionEval eeval = this.getEvalPluginByOpercode(oper.getOpercode());
 			if(eeval == null) {
 				logger.error("Cannot find oper expressioneval:"+oper.getOpercode());

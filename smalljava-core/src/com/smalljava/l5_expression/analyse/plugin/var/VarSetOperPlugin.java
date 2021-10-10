@@ -23,6 +23,16 @@ public class VarSetOperPlugin extends DefaultIPluginImplement{
 			return null;
 		}
 		
+		String highopers[] = new String[] {"<=","==",">="};
+		AstOperAndPos highoap = getFirstOperCode(strcode,highopers);
+		
+		if(highoap!=null) {
+			//存在计算优先级更低的运算符，返回
+			logger.info("find high oper,return.");
+			return null;
+		}
+		
+		
 		//生成新对象准备返回
 		//使用一个二元运算符元素来进行封装
 		VarSetOperElement root = new VarSetOperElement();
