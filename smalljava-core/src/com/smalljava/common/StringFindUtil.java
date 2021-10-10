@@ -1,7 +1,10 @@
 package com.smalljava.common;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.smalljava.common.logging.Logger;
+import com.smalljava.common.logging.LoggerFactory;
+
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 /**
  * 字符串内查找特定字符串的函数方法 因为需要考虑到双引号的存在，需要过滤掉双引号，单引号之内的特殊字符

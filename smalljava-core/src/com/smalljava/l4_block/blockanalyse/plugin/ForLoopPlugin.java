@@ -1,9 +1,7 @@
 package com.smalljava.l4_block.blockanalyse.plugin;
 
-//import org.dom4j.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.smalljava.common.logging.Logger;
+import com.smalljava.common.logging.LoggerFactory;
 import com.smalljava.l4_block.SmallJavaBlockConst;
 import com.smalljava.l4_block.blockvo.BasicBlock;
 import com.smalljava.l4_block.blockvo.childblock.FORBlock;

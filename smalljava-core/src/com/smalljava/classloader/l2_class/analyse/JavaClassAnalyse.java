@@ -1,13 +1,12 @@
 package com.smalljava.classloader.l2_class.analyse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.smalljava.classloader.l2_class.analyse.plugin.IJavaClassAnalysePlugin;
 import com.smalljava.classloader.l2_class.analyse.plugin.JavaClassAnalysePluginManager;
 import com.smalljava.classloader.l2_class.vo.JavaClassTemplateVO;
 import com.smalljava.classloader.l2_class.vo.element.AbstractJavaClassElement;
 import com.smalljava.common.StringFindUtil;
+import com.smalljava.common.logging.Logger;
+import com.smalljava.common.logging.LoggerFactory;
 
 /**
  * 这个类负责将一个class定义的字符串分解成一个class的VO对象

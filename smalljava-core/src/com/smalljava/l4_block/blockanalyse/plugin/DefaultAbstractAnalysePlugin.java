@@ -1,7 +1,7 @@
 package com.smalljava.l4_block.blockanalyse.plugin;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.smalljava.common.logging.Logger;
+import com.smalljava.common.logging.LoggerFactory;
 
 /**
  * 这个抽象类用来封装公共方法，供各个Plugin对象来使用

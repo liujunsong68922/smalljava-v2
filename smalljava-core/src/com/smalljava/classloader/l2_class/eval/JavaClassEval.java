@@ -1,8 +1,5 @@
 package com.smalljava.classloader.l2_class.eval;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.smalljava.classloader.JavaClassStaticInstanceMap;
 import com.smalljava.classloader.l2_class.vo.JavaClassInstanceVO;
 import com.smalljava.classloader.l2_class.vo.JavaClassStaticInstanceVO;
@@ -10,6 +7,8 @@ import com.smalljava.classloader.l2_class.vo.JavaClassTemplateVO;
 import com.smalljava.classloader.l2_class.vo.element.JavaClassMethodElement;
 import com.smalljava.classloader.l2_class.vo.element.JavaClassVarDefineElement;
 import com.smalljava.common.StringFindUtil;
+import com.smalljava.common.logging.Logger;
+import com.smalljava.common.logging.LoggerFactory;
 import com.smalljava.l4_block.blockanalyse.BlockAnalyse;
 import com.smalljava.l4_block.blockeval.BlockEvaluator;
 import com.smalljava.l4_block.blockvo.BasicBlock;

@@ -1,12 +1,11 @@
 package com.smalljava.classloader.l3_method.analyse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.smalljava.classloader.l2_class.vo.element.JavaClassMethodElement;
 import com.smalljava.classloader.l3_method.vo.JavaMethodArgumentVO;
 import com.smalljava.classloader.l3_method.vo.JavaMethodRootVO;
 import com.smalljava.common.StringFindUtil;
+import com.smalljava.common.logging.Logger;
+import com.smalljava.common.logging.LoggerFactory;
 
 /**
  * JAVA的method方法分析器

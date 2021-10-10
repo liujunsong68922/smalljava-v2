@@ -1,9 +1,11 @@
 package com.smalljava.l4_block.blockvo;
 
 import java.util.ArrayList;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
+import com.smalljava.common.logging.Logger;
+import com.smalljava.common.logging.LoggerFactory;
 import com.smalljava.l4_block.blockvo.childblock.MethodBlock;
 
 /**

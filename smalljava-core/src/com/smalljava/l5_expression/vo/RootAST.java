@@ -5,9 +5,8 @@ import java.util.UUID;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.smalljava.common.logging.Logger;
+import com.smalljava.common.logging.LoggerFactory;
 import com.smalljava.l5_expression.vo.constvalue.AbstractConstDataElement;
 import com.smalljava.l5_expression.vo.one.AbstractSingleOperDataOperElement;
 import com.smalljava.l5_expression.vo.two.DualOperDataOperElement;

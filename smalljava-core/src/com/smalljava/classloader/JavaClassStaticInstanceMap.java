@@ -2,10 +2,9 @@ package com.smalljava.classloader;
 
 import java.util.HashMap;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.smalljava.classloader.l2_class.vo.JavaClassStaticInstanceVO;
+import com.smalljava.common.logging.Logger;
+import com.smalljava.common.logging.LoggerFactory;
 
 /**
  * MEMO：这个类用来存放所有的JavaClassStaticInstance

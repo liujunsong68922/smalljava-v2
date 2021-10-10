@@ -1,9 +1,8 @@
 package com.smalljava.l5_expression.eval.plugin.two;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.smalljava.common.VarValue;
+import com.smalljava.common.logging.Logger;
+import com.smalljava.common.logging.LoggerFactory;
 import com.smalljava.l5_expression.eval.ExpressionEval;
 import com.smalljava.l5_expression.eval.IExpressionEval;
 import com.smalljava.l5_expression.eval.operelement.DoubleValue;

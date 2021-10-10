@@ -2,11 +2,10 @@ package com.smalljava.l5_expression.eval.plugin.var;
 
 import java.util.UUID;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.smalljava.common.UuidObjectManager;
 import com.smalljava.common.VarValue;
+import com.smalljava.common.logging.Logger;
+import com.smalljava.common.logging.LoggerFactory;
 import com.smalljava.l5_expression.eval.IExpressionEval;
 import com.smalljava.l5_expression.vo.RootAST;
 import com.smalljava.l5_expression.vo.var.NewOperElement;

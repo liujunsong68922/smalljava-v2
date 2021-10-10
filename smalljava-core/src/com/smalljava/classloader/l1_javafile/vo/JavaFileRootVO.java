@@ -2,11 +2,13 @@ package com.smalljava.classloader.l1_javafile.vo;
 
 import java.util.ArrayList;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 import com.smalljava.classloader.l1_javafile.vo.element.JavaFileClassElement;
 import com.smalljava.classloader.l1_javafile.vo.element.JavaFileImportElement;
+import com.smalljava.common.logging.Logger;
+import com.smalljava.common.logging.LoggerFactory;
 
 /**
  * JavaFileVO代表一个Java的源文件或者字符串，它没有基于自身的层次关系

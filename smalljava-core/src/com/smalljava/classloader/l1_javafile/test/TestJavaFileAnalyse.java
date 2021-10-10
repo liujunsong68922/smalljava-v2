@@ -1,11 +1,10 @@
 package com.smalljava.classloader.l1_javafile.test;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.smalljava.classloader.l1_javafile.analyse.ClassTableAnalyse;
 import com.smalljava.classloader.l1_javafile.analyse.JavaFileAnalyse;
 import com.smalljava.classloader.l1_javafile.vo.JavaFileRootVO;
+import com.smalljava.common.logging.Logger;
+import com.smalljava.common.logging.LoggerFactory;
 import com.smalljava.l9_space.classtable.IClassTable;
 
 public class TestJavaFileAnalyse {

@@ -1,8 +1,7 @@
 package com.smalljava.l5_expression.analyse.plugin.var;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.smalljava.common.logging.Logger;
+import com.smalljava.common.logging.LoggerFactory;
 import com.smalljava.l5_expression.analyse.AstOperAndPos;
 import com.smalljava.l5_expression.analyse.plugin.DefaultIPluginImplement;
 import com.smalljava.l5_expression.vo.AbstractAST;

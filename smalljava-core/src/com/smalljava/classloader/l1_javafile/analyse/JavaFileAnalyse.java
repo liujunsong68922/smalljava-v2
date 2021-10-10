@@ -1,13 +1,15 @@
 package com.smalljava.classloader.l1_javafile.analyse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 import com.smalljava.classloader.l1_javafile.analyse.plugin.IJavaFileAnalysePlugin;
 import com.smalljava.classloader.l1_javafile.analyse.plugin.JavaFileAnalysePluginManager;
 import com.smalljava.classloader.l1_javafile.vo.AbstractJavaFileElement;
 import com.smalljava.classloader.l1_javafile.vo.JavaFileRootVO;
 import com.smalljava.common.StringFindUtil;
+import com.smalljava.common.logging.Logger;
+import com.smalljava.common.logging.LoggerFactory;
 
 public class JavaFileAnalyse {
 	private Logger logger = LoggerFactory.getLogger(JavaFileAnalyse.class);

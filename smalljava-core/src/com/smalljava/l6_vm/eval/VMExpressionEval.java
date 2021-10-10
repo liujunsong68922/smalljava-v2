@@ -1,8 +1,7 @@
 package com.smalljava.l6_vm.eval;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.smalljava.common.logging.Logger;
+import com.smalljava.common.logging.LoggerFactory;
 import com.smalljava.l6_vm.eval.plugin.IEval;
 import com.smalljava.l6_vm.eval.plugin.IEvalPluginManager;
 import com.smalljava.l6_vm.vo.VMExpression;

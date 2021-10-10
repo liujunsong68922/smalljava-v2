@@ -9,8 +9,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Base64;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.smalljava.common.logging.Logger;
+import com.smalljava.common.logging.LoggerFactory;
+
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 public class FileBase64 {
 	private static Logger logger = LoggerFactory.getLogger(FileBase64.class);

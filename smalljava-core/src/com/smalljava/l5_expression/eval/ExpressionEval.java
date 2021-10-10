@@ -2,10 +2,9 @@ package com.smalljava.l5_expression.eval;
 
 import java.util.HashMap;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.smalljava.common.VarValue;
+import com.smalljava.common.logging.Logger;
+import com.smalljava.common.logging.LoggerFactory;
 import com.smalljava.l5_expression.eval.plugin.atom.AtomEvalPlugin;
 import com.smalljava.l5_expression.eval.plugin.constvalue.ConstEvalPlugin;
 import com.smalljava.l5_expression.eval.plugin.one.LogicNotPlugin;

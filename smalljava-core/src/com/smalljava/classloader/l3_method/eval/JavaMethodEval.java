@@ -1,10 +1,9 @@
 package com.smalljava.classloader.l3_method.eval;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.smalljava.classloader.l3_method.vo.JavaMethodRootVO;
 import com.smalljava.common.VarValue;
+import com.smalljava.common.logging.Logger;
+import com.smalljava.common.logging.LoggerFactory;
 import com.smalljava.l4_block.blockanalyse.BlockAnalyse;
 import com.smalljava.l4_block.blockeval.BlockEvaluator;
 import com.smalljava.l4_block.blockvo.BasicBlock;

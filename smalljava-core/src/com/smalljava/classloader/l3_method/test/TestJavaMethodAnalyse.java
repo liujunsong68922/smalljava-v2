@@ -1,8 +1,5 @@
 package com.smalljava.classloader.l3_method.test;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.smalljava.classloader.l1_javafile.analyse.ClassTableAnalyse;
 import com.smalljava.classloader.l1_javafile.analyse.JavaFileAnalyse;
 import com.smalljava.classloader.l1_javafile.vo.JavaFileRootVO;
@@ -11,6 +8,8 @@ import com.smalljava.classloader.l2_class.vo.JavaClassTemplateVO;
 import com.smalljava.classloader.l2_class.vo.element.JavaClassMethodElement;
 import com.smalljava.classloader.l3_method.analyse.JavaMethodAnalyse;
 import com.smalljava.classloader.l3_method.vo.JavaMethodRootVO;
+import com.smalljava.common.logging.Logger;
+import com.smalljava.common.logging.LoggerFactory;
 import com.smalljava.l9_space.classtable.IClassTable;
 
 public class TestJavaMethodAnalyse {

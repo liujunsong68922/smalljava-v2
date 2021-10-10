@@ -2,12 +2,11 @@ package com.smalljava.classloader.l2_class.vo;
 
 import java.util.ArrayList;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.smalljava.classloader.l2_class.vo.element.AbstractJavaClassElement;
 import com.smalljava.classloader.l2_class.vo.element.JavaClassMethodElement;
 import com.smalljava.classloader.l2_class.vo.element.JavaClassVarDefineElement;
+import com.smalljava.common.logging.Logger;
+import com.smalljava.common.logging.LoggerFactory;
 import com.smalljava.l9_space.vartable.IVarTable;
 
 /**

@@ -2,12 +2,14 @@ package com.smalljava.l9_space.vartable.hashmapimpl;
 
 import java.util.HashMap;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 //import com.alibaba.fastjson.JSON;
 import com.smalljava.common.JSONFunction;
 import com.smalljava.common.VarValue;
+import com.smalljava.common.logging.Logger;
+import com.smalljava.common.logging.LoggerFactory;
 import com.smalljava.l9_space.vartable.IVarTable;
 
 public abstract class AbstractHashMapVarTableImpl implements IVarTable {

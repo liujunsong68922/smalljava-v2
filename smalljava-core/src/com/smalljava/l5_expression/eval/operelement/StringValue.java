@@ -1,9 +1,8 @@
 package com.smalljava.l5_expression.eval.operelement;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.smalljava.common.VarValue;
+import com.smalljava.common.logging.Logger;
+import com.smalljava.common.logging.LoggerFactory;
 
 /**
  * 针对整数类型的操作封装符号

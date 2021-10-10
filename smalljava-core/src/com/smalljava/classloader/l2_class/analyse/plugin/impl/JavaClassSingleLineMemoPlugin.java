@@ -1,12 +1,11 @@
 package com.smalljava.classloader.l2_class.analyse.plugin.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.smalljava.classloader.l2_class.analyse.plugin.IJavaClassAnalysePlugin;
 import com.smalljava.classloader.l2_class.vo.element.AbstractJavaClassElement;
 import com.smalljava.classloader.l2_class.vo.element.JavaClassSingleLineMemoElement;
 import com.smalljava.common.StringFindUtil;
+import com.smalljava.common.logging.Logger;
+import com.smalljava.common.logging.LoggerFactory;
 
 /**
  * 分析Java源代码文件中的单行注释

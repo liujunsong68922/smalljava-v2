@@ -2,8 +2,8 @@ package com.smalljava.l6_vm.eval.plugin;
 
 import java.util.HashMap;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.smalljava.common.logging.Logger;
+import com.smalljava.common.logging.LoggerFactory;
 
 /**
  * MEMO:这是一个工厂类
