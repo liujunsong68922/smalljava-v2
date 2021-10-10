@@ -20,22 +20,6 @@
   </build>
   
 	<dependencies>
-	<!-- 
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>1.7.30</version>
-		</dependency>
-		<dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-            <version>1.1.7</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.1.7</version>
-        </dependency>
-       -->
+	<!-- 删除所有特殊的jar包依赖，这样Java算法就可以很容易迁移到其他环境去 -->
 	</dependencies>  
 </project>
