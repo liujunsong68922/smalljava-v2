@@ -58,6 +58,7 @@ public class LogicLitterOperEvalPlugin implements IExpressionEval {
 					varvalue1.setVartype("boolean");
 					varvalue1.setVarsvalue("" + b1);
 					return varvalue1;
+					
 				}
 				if (leftvar.getVartype().equals("long")) {
 					LongValue longoper = new LongValue(leftvar.getVarsvalue());
@@ -70,6 +71,7 @@ public class LogicLitterOperEvalPlugin implements IExpressionEval {
 					varvalue2.setVarsvalue("" + b2);
 
 					return varvalue2;
+					
 				}
 				if (leftvar.getVartype().equals("float")) {
 					FloatValue floatoper = new FloatValue(leftvar.getVarsvalue());
@@ -80,6 +82,7 @@ public class LogicLitterOperEvalPlugin implements IExpressionEval {
 					varvalue3.setVartype("boolean");
 					varvalue3.setVarsvalue("" + b3);
 					return varvalue3;
+					
 				}
 				if (leftvar.getVartype().equals("double")) {
 					DoubleValue doubleoper = new DoubleValue(leftvar.getVarsvalue());
