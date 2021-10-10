@@ -29,4 +29,12 @@ public class JavaMethodArgumentVO {
 		this.argtype = argtype;
 	}
 	
+	public String toJSONString() {
+		String s1="{";
+		s1 += "argname:"+argname+",";
+		s1 += "argtype:"+argtype;
+		s1 +="}";
+	
+		return s1;
+	}
 }

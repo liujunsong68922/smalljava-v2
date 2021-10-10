@@ -18,8 +18,17 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 
+import com.smalljava.common.VarValue;
 import com.smalljava.l5_expression.analyse.ExpressionASTAnalyse;
+import com.smalljava.l5_expression.eval.ExpressionEval;
 import com.smalljava.l5_expression.vo.RootAST;
+import com.smalljava.l9_space.classtable.IClassTable;
+import com.smalljava.l9_space.classtable.impl.ClassTableImpl;
+import com.smalljava.l9_space.vartable.IVarTable;
+import com.smalljava.l9_space.vartable.hashmapimpl.L2_HashMapClassInstanceVarTableImpl;
+import com.smalljava.l9_space.vartable.hashmapimpl.L2_HashMapClassStaticVarTableImpl;
+import com.smalljava.l9_space.vartable.hashmapimpl.L3_HashMapMethodInstanceVarTableImpl;
+import com.smalljava.l9_space.vartable.hashmapimpl.L4_HashMapBlockVarTableImpl;
 
 public class TestExpressEvalFrame {
 	private static TestMainFrame mainframe = new TestMainFrame();
@@ -87,8 +96,11 @@ class TestMainFrame extends JFrame {
 		// add buttonclick1
 		this.addButtonClick1();
 
-		// add analyse button click
+		// add analyse button click event listener
 		this.addAnalyseButtonListener();
+		
+		// add eval button click event listener
+		this.addEvalButtonListener();
 	}
 
 	private void addButtonClick1() {
@@ -175,6 +187,51 @@ class TestMainFrame extends JFrame {
 			}
 		});
 	}
+
+	private void addEvalButtonListener() {
+		this.buttonpanel.evalbutton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("You clicked analyse Button");
+				String stext = TestMainFrame.sourcecode.getText();
+				System.out.println("{" + stext + "}");
+
+				ExpressionASTAnalyse eanlyse = new ExpressionASTAnalyse();
+
+				RootAST root = eanlyse.analyse(stext);
+				if (root == null) {
+					System.out.println("---->ast 失败");
+					//String s1 = root.getShowString(0);
+					String s2 = "----->ast 失败\r\n" ;
+					TestMainFrame.asttree.setText(s2);
+					return;
+				} else {
+					System.out.println("---->ast 成功");
+
+					//调用执行工具来进行计算
+					//从L2级别开始构建变量表
+					L2_HashMapClassStaticVarTableImpl l2_static = new L2_HashMapClassStaticVarTableImpl("");
+					L2_HashMapClassInstanceVarTableImpl l2_instance = new L2_HashMapClassInstanceVarTableImpl("l2",l2_static);
+					L3_HashMapMethodInstanceVarTableImpl l3 = new L3_HashMapMethodInstanceVarTableImpl("",l2_instance);
+					L4_HashMapBlockVarTableImpl l4 = new L4_HashMapBlockVarTableImpl("",l3);
+					IClassTable classtable = new ClassTableImpl();
+					IVarTable vartable=l4;
+					vartable.defineVar("i","int");
+					ExpressionEval eval = new ExpressionEval();
+					VarValue vv = eval.eval(root, vartable, classtable);
+					if(vv == null) {
+						System.out.println("表达式计算失败:vv is null");
+					}else {
+						System.out.println("计算结果:"+vv.toString());
+					}
+
+				}
+
+			}
+		});
+	}
+	
 }
 
 class TestFrameButtonPanel extends JPanel {

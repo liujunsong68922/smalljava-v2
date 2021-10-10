@@ -2,7 +2,7 @@ package com.smalljava.classloader.l3_method.vo;
 
 import java.util.ArrayList;
 
-import com.alibaba.fastjson.JSON;
+//import com.alibaba.fastjson.JSON;
 
 /**
  * Java代码里面Method的表示
@@ -41,11 +41,21 @@ public class JavaMethodRootVO {
 		this.methodContent = methodContent;
 	}
 	
-	public String toJSONString() {
-		return JSON.toJSONString(this);
+	private String toJSONString() {
+		String strret="{";
+		strret += "methodname:"+this.methodname+",";
+		strret += "methodarg:[";
+		
+		for(JavaMethodArgumentVO vo : this.argArray) {
+			strret += vo.toJSONString();
+		}
+		strret += "]";
+		strret += "methodContent:"+ this.methodContent;
+		return strret;
+		
 	}
 	
 	public void show() {
-		System.out.println(this.toJSONString());
+		System.out.println(this.methodContent);
 	}
 }

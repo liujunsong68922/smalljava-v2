@@ -2,7 +2,8 @@ package com.smalljava.l6_vm.memory.impl;
 
 import java.util.HashMap;
 
-import com.alibaba.fastjson.JSON;
+//import com.alibaba.fastjson.JSON;
+import com.smalljava.common.JSONFunction;
 import com.smalljava.l6_vm.memory.IMemory;
 
 /**
@@ -25,7 +26,8 @@ public class DefaultHashMapMemoryImpl implements IMemory {
 
 	@Override
 	public void show() {
-		String s1 = JSON.toJSONString(localmap);
+		JSONFunction jsonfunction = new JSONFunction();
+		String s1=jsonfunction.stringhashmapToJsonString(localmap);
 		System.out.println(s1);
 		
 	}

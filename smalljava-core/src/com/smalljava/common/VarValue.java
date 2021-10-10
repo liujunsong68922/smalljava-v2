@@ -33,5 +33,14 @@ public class VarValue {
 		return s1;
 	}
 	
+	public String toJSONString(){
+		String sret="{";
+		sret += "varname: "+ varname!=null?varname:"null" +",";
+		sret += "vartype: "+ vartype!=null?vartype:"null" +",";
+		sret += "varsvalue:" + varsvalue!=null?varsvalue:"null";
+		sret += "}";
+		return sret;
+	}
+	
 	
 }
