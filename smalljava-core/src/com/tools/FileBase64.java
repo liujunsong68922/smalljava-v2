@@ -9,8 +9,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Base64;
 
-import com.smalljava.common.logging.Logger;
-import com.smalljava.common.logging.LoggerFactory;
+import com.smalljava.core.common.logging.Logger;
+import com.smalljava.core.common.logging.LoggerFactory;
 
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
