@@ -6,3 +6,5 @@
 
 -----------------------------------
 Java语言实现的SmallJava解释器，产品名为smalljava-core.
+标准包名称： com.smalljava.core
+
