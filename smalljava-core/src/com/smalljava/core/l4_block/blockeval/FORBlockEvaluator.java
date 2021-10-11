@@ -55,7 +55,7 @@ public class FORBlockEvaluator {
 			log("【ERROR】IF节点执行condition节点出错."+block.getForconditionNode().getBlockContent());
 			return false;
 		}
-		logger.error("for条件计算结果：" + b2.getVarsvalue());
+		logger.error("for条件计算结果1：" + b2.getVarsvalue());
 		
 		while (b2.getVarsvalue().equalsIgnoreCase("true")) {
 			//step3.执行代码块
@@ -68,6 +68,7 @@ public class FORBlockEvaluator {
 			}
 			
 			//ASTTreeNode node3 = new ASTTreeNode(block.getLoopNode().getBlockContent(), 0);
+			System.out.println(block.getLoopNode().getBlockContent());
 			RootAST node3 = expressionASTAnalyse.analyse(block.getLoopNode().getBlockContent());
 			//node3.analyseTree();
 			if(node3 == null) {
@@ -93,13 +94,17 @@ public class FORBlockEvaluator {
 				node2.show(0);
 			}
 			//boolean b5= node2.eval(block,classtable);
+			
 			VarValue b5 =expressionEval.eval(node2, vartable, classtable);
 			if(b5 == null) {
 				log("【ERROR】IF节点执行condition节点出错."+block.getForconditionNode().getBlockContent());
 				return false;				
 			}
 			
-			logger.error("for条件计算结果：" +b5.getVarsvalue());
+			logger.error("for条件计算结果2：" +b5.getVarsvalue());
+			//如果这里忘记了对判断元素重新赋值，会造成死循环
+			
+			b2 = b5;
 		}
 		
 		return true;

@@ -40,7 +40,7 @@ public class TestBlockEvalutor {
 		//s1 += "{i=i*i; j=i+i;k=j+j;}";
 		//s1 += "while(i>8000){i=i-1;}";
 		//s1 += "if(i>9000){int kkk = 10000;int jjj=666;}else{int jjj=8888;}";
-		//s1 += "for(int i=0;i<=1000;i=i+1) {int j=100;j=i*i;}";
+		s1 += "int j; int i; for(i=0;i < 5; i = i + 1) {j=i*i;}";
 		//s1 += "HashMap map1= new HashMap();";
 		//s1 += "map1.put(\"a\",\"a\");";
 		//s1 += "import java.util.HashMap;";
