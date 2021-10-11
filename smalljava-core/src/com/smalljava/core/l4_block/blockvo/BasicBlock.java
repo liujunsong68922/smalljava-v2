@@ -4,6 +4,8 @@ import java.util.ArrayList;
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
 
+import javax.swing.tree.DefaultMutableTreeNode;
+
 import com.smalljava.core.common.logging.Logger;
 import com.smalljava.core.common.logging.LoggerFactory;
 import com.smalljava.core.l4_block.blockvo.childblock.MethodBlock;
@@ -46,9 +48,8 @@ public class BasicBlock {
 	 * classVarTable代表的是class级别（Object级别的变量表)
 	 * MEMO:这个变量表只有在parentblock=null的时候是可读可写的，但不可定义变量。
 	 */
-	//private IVarTable classVarTable;
-	
-	
+	// private IVarTable classVarTable;
+
 	public BasicBlock getParentblock() {
 		return parentblock;
 	}
@@ -62,39 +63,39 @@ public class BasicBlock {
 	 */
 //	private HashMap<String, VarValue> myvarmap = new HashMap<String, VarValue>();
 
-	
 	/**
 	 * MEMO：为了将Class的解析和block的解析合并起来，在这里增加methodList
 	 */
-	//private ArrayList<MethodBlock> methodList;
+	// private ArrayList<MethodBlock> methodList;
 	/**
 	 * 构造函数，必须传入一个字符串
 	 * 
 	 * @param blockcontent
 	 */
-	public BasicBlock(String _blocktype, String _blockcontent,BasicBlock parentblock) {
-		
+	public BasicBlock(String _blocktype, String _blockcontent, BasicBlock parentblock) {
+
 		this.blocktype = _blocktype;
 		// 初始化blockcontent
 		this.blockContent = _blockcontent;
 		// 此处化Children
 		this.children = new ArrayList<BasicBlock>();
-		//创建时需要设置上级节点
+		// 创建时需要设置上级节点
 		this.parentblock = parentblock;
-		
-		//this.vartable = _vartable;
-		//这里需要做一个额外判断，
-		//如果parentblock==null
-		//就在变量表中增加一个名为"RETURN"的变量
-		//if(parentblock == null) {
-		//	this.getVartable().defineVar("RETURN", "String");
-		//}else {
-			//不是根的Block节点，不可定义这个变量
-			//do nothing.
-		//}
+
+		// this.vartable = _vartable;
+		// 这里需要做一个额外判断，
+		// 如果parentblock==null
+		// 就在变量表中增加一个名为"RETURN"的变量
+		// if(parentblock == null) {
+		// this.getVartable().defineVar("RETURN", "String");
+		// }else {
+		// 不是根的Block节点，不可定义这个变量
+		// do nothing.
+		// }
 		// 初始化methodList
-		//this.methodList = new ArrayList<MethodBlock>();
+		// this.methodList = new ArrayList<MethodBlock>();
 	}
+
 	/**
 	 * 构造函数，必须传入一个字符串
 	 * 
@@ -154,10 +155,11 @@ public class BasicBlock {
 		}
 
 		if (this.children.size() == 0) {
-			if(this instanceof MethodBlock) {
+			if (this instanceof MethodBlock) {
 				MethodBlock mb = (MethodBlock) this;
-				logger.error(strleft + "---->" + blockname + " --> " + mb.getMethodname()+" : " + mb.getMethodcontent());
-			}else {
+				logger.error(
+						strleft + "---->" + blockname + " --> " + mb.getMethodname() + " : " + mb.getMethodcontent());
+			} else {
 				logger.error(strleft + "---->" + blockname + ":" + this.blockContent);
 			}
 			return;
@@ -185,19 +187,19 @@ public class BasicBlock {
 		}
 
 		if (this.children.size() == 0) {
-			String s1=this.toString();
+			String s1 = this.toString();
 			logger.error(strleft + "---->" + blockname + ":" + s1);
 			return;
 		} else {
-			String s1=this.toString();
-			logger.error(strleft + "---->" + blockname +s1);
+			String s1 = this.toString();
+			logger.error(strleft + "---->" + blockname + s1);
 		}
 
 		for (BasicBlock child : this.children) {
 			child.showvar(ilevel + 1);
 		}
 	}
-	
+
 	public String getBlocktype() {
 		return blocktype;
 	}
@@ -222,5 +224,95 @@ public class BasicBlock {
 //		this.classVarTable = classVarTable;
 //	}
 
-	
+	public String getShowString(int ilevel) {
+		String sret = "";
+		if (this.children == null) {
+			return sret;
+		}
+		// logger.error(this.getClass().getSimpleName());
+		String blockname = this.getClass().getSimpleName();
+		if (this.blocktype != null && this.blocktype.length() > 0) {
+			blockname = this.blocktype;
+		}
+		String strleft = "";
+		for (int i = 0; i < ilevel; i++) {
+			strleft += "    ";
+		}
+
+		if (this.children.size() == 0) {
+			if (this instanceof MethodBlock) {
+				MethodBlock mb = (MethodBlock) this;
+				logger.error(
+						strleft + "---->" + blockname + " --> " + mb.getMethodname() + " : " + mb.getMethodcontent());
+				sret += "\r\n";
+				sret += (strleft + "---->" + blockname + " --> " + mb.getMethodname() + " : " + mb.getMethodcontent());
+			} else {
+				logger.error(strleft + "---->" + blockname + ":" + this.blockContent);
+				sret += "\r\n";
+				sret += (strleft + "---->" + blockname + ":" + this.blockContent);
+			}
+			return sret;
+		} else {
+			logger.error(strleft + "---->" + blockname);
+			sret += "\r\n";
+			sret += (strleft + "---->" + blockname);
+		}
+
+		for (BasicBlock child : this.children) {
+			String s1 = child.getShowString(ilevel + 1);
+			sret += s1;
+		}
+		return sret;
+	}
+
+	public DefaultMutableTreeNode toTreeNode(int ilevel) {
+		{
+			DefaultMutableTreeNode retTreeNode = new DefaultMutableTreeNode("");
+			if (this.children == null) {
+				return retTreeNode;
+			}
+			// logger.error(this.getClass().getSimpleName());
+			String blockname = this.getClass().getSimpleName();
+			if (this.blocktype != null && this.blocktype.length() > 0) {
+				blockname = this.blocktype;
+			}
+			String strleft = "";
+			for (int i = 0; i < ilevel; i++) {
+				strleft += "    ";
+			}
+
+			if (this.children.size() == 0) {
+				if (this instanceof MethodBlock) {
+					MethodBlock mb = (MethodBlock) this;
+					logger.error(strleft + "---->" + blockname + " --> " + mb.getMethodname() + " : "
+							+ mb.getMethodcontent());
+					// sret += "\r\n";
+					// sret += (strleft + "---->" + blockname + " --> " + mb.getMethodname()+" : " +
+					// mb.getMethodcontent());
+					retTreeNode = new DefaultMutableTreeNode(strleft + "---->" + blockname + " --> "
+							+ mb.getMethodname() + " : " + mb.getMethodcontent());
+				} else {
+					logger.error(strleft + "---->" + blockname + ":" + this.blockContent);
+					// sret += "\r\n";
+					// sret += (strleft + "---->" + blockname + ":" + this.blockContent);
+					retTreeNode = new DefaultMutableTreeNode(strleft + "---->" + blockname + ":" + this.blockContent);
+				}
+				return retTreeNode;
+			} else {
+				logger.error(strleft + "---->" + blockname);
+				// sret += "\r\n";
+				// sret += (strleft + "---->" + blockname);
+				retTreeNode = new DefaultMutableTreeNode(strleft + "---->" + blockname);
+			}
+
+			for (BasicBlock child : this.children) {
+				// String s1 = child.getShowString(ilevel + 1);
+				// sret += s1;
+				DefaultMutableTreeNode childnode = child.toTreeNode(ilevel + 1);
+				retTreeNode.add(childnode);
+			}
+			// return sret;
+			return retTreeNode;
+		}
+	}
 }
