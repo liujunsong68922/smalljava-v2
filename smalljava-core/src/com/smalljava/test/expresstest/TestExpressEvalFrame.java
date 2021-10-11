@@ -1,4 +1,4 @@
-package com.smalljava.test;
+package com.smalljava.test.expresstest;
 
 import java.awt.Button;
 import java.awt.Color;
