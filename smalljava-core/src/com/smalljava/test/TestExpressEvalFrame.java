@@ -1,4 +1,4 @@
-package com.smalljava.core.l5_expression.test;
+package com.smalljava.test;
 
 import java.awt.Button;
 import java.awt.Color;
