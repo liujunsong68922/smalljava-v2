@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import com.smalljava.core.common.UUIDFunction;
 import com.smalljava.core.common.UuidObjectManager;
 import com.smalljava.core.common.VarValue;
 import com.smalljava.core.common.logging.Logger;
@@ -13,11 +14,12 @@ import com.smalljava.core.l5_expression.eval.ExpressionEval;
 import com.smalljava.core.l5_expression.eval.IExpressionEval;
 import com.smalljava.core.l5_expression.vo.RootAST;
 import com.smalljava.core.l5_expression.vo.obj.ObjectCallOperElement;
+import com.smalljava.core.l6_vm.objectcall.ObjectCallManager;
 import com.smalljava.core.l9_space.classtable.IClassTable;
 import com.smalljava.core.l9_space.vartable.IVarTable;
 
 /**
- * Java¶ÔÏó·½·¨µ÷ÓÃµÄÖ´ÐÐ²å¼þ
+ * Javaï¿½ï¿½ï¿½ó·½·ï¿½ï¿½ï¿½ï¿½Ãµï¿½Ö´ï¿½Ð²ï¿½ï¿½
  * 
  * @author liujunsong
  *
@@ -37,68 +39,64 @@ public class ObjectCallEvalPlugin implements IExpressionEval {
 			logger.error("root is not ObjectCallOperElement");
 			return null;
 		} else {
-			// ÔÝÊ±²»¿¼ÂÇ×Ô¶¨ÒåclassµÄÄÚÈÝ
-			// ×Ô¶¨ÒåclassµÄ²¿·ÖÐèÒªÔö¼ÓÐÂµÄ´úÂë½øÐÐ´¦Àí
-			// Ä¿Ç°Ö»¿¼ÂÇjavaÐéÄâ»úÒÑ¾­Ö§³ÖµÄÀàµÄ´¦Àí
+			// ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½classï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			// ï¿½Ô¶ï¿½ï¿½ï¿½classï¿½Ä²ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ÂµÄ´ï¿½ï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½ï¿½
+			// Ä¿Ç°Ö»ï¿½ï¿½ï¿½ï¿½javaï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½Ö§ï¿½Öµï¿½ï¿½ï¿½Ä´ï¿½ï¿½ï¿½
 			ObjectCallOperElement objcall = (ObjectCallOperElement) root;
 			String objname = objcall.getObjname();
 			logger.info("objname:" + objname);
 
-			// Ê×ÏÈ·ÃÎÊ±äÁ¿±í£¬»ñÈ¡¶ÔÏóVarValue
+			// ï¿½ï¿½ï¿½È·ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½VarValue
 			VarValue objvar = vartable.getVarValue(objname);
 			if (objvar == null) {
 				logger.error("[ERROR] find var in vartable is null:" + objname);
 				return null;
 			}
+			String classname = objvar.getVarsvalue();
 			String objuuid = objvar.getVarsvalue();
 			Object targetobj = UuidObjectManager.getObject(objuuid);
 			if (targetobj == null) {
-				// ´Ë´¦³ÌÐòÖ´ÐÐ·¢ÉúÁË´íÎó
+				// ï¿½Ë´ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½Ð·ï¿½ï¿½ï¿½ï¿½Ë´ï¿½ï¿½ï¿½
 				logger.error("[ERROR]targetobj is null object.");
 				return null;
 			}
 
-			// ½«×Ó½Úµã¾­¹ý¼ÆËã×ª»»³Écallarg
+			// ï¿½ï¿½ï¿½Ó½Úµã¾­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½callarg
 			ArrayList<VarValue> arglist = new ArrayList<VarValue>();
 			for (RootAST child : root.getChildren()) {
 				ExpressionEval eval = new ExpressionEval();
 				VarValue vvalue1 = eval.eval(child, vartable, classtable);
 				logger.info("child return:" + vvalue1.toJSONString());
 
-				// ½«·µ»ØÖµÐ´Èëcallarg
+				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÖµÐ´ï¿½ï¿½callarg
 				arglist.add(vvalue1);
 			}
-			return this.objectcall(targetobj, objname, arglist);
+			return this.objectcall(classname,targetobj, objname, arglist);
 
 			// logger.error("[ERROR] object call error happened.");
 			// return null;
 		}
 	}
 
-	public VarValue objectcall(Object targobj, String methodname, ArrayList<VarValue> arglist) {
+	public VarValue objectcall(String classname,Object targobj, String methodname, ArrayList<VarValue> arglist) {
 
 		// step1. get Method
 		int argnum = arglist.size();
-		Method mm = this.getMethod(targobj, methodname,argnum);
+		//Method mm = this.getMethod(targobj, methodname,argnum);
 
-		if (mm == null) {
-			logger.error("[ERROR] get targetobj's methodname failed." + methodname);
-		}
+//		if (mm == null) {
+//			logger.error("[ERROR] get targetobj's methodname failed." + methodname);
+//		}
 		// Step2. call objects by method
 
 		Object args = null;
 		Object retobj;
 		try {
-			retobj = mm.invoke(targobj, args);
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		} catch (InvocationTargetException e) {
+			//retobj = mm.invoke(targobj, args);
+			ObjectCallManager manager = new ObjectCallManager();
+			retobj = manager.objcall(classname, targobj, methodname, args);
+		
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
@@ -135,7 +133,9 @@ public class ObjectCallEvalPlugin implements IExpressionEval {
 			return var4;
 		} else if (retobj instanceof Object) {
 			// create new uuid
-			String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+			UUIDFunction uuidf = new UUIDFunction();
+			String uuid = uuidf.uuid();
+			//String uuid = UUID.randomUUID().toString().replaceAll("-", "");
 			UuidObjectManager uuidmanager = new UuidObjectManager();
 			uuidmanager.setObject(uuid, retobj);
 
@@ -150,31 +150,31 @@ public class ObjectCallEvalPlugin implements IExpressionEval {
 	}
 
 	/**
-	 * MEMO£ºÀûÓÃJAVAµÄ·´Éä»úÖÆ£¬´ÓObjectÀïÃæ»ñÈ¡µÚÒ»¸ö·ûºÏµÄMethod»ØÀ´¡£ MEMO:
-	 * ÕâÒ»·½·¨ÐèÒªÓÃµ½JavaÓïÑÔµÄÌØ¶¨ÌØÐÔ£¬Òò´Ë²»ÄÜÖ±½ÓÇ¨ÒÆµ½ÆäËûÓïÑÔ¡£ MEMO: ÔÝÊ±²»¿¼ÂÇ¶ÔÏó¶ÔÓÃµÄÖØÔØ·½·¨£¬Í¬Ãû·½·¨µ÷ÓÃÔÙ¿¼ÂÇ½øÐÐ×ª»»Ö§³Ö
+	 * MEMOï¿½ï¿½ï¿½ï¿½ï¿½ï¿½JAVAï¿½Ä·ï¿½ï¿½ï¿½ï¿½ï¿½Æ£ï¿½ï¿½ï¿½Objectï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½Methodï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ MEMO:
+	 * ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½Ãµï¿½Javaï¿½ï¿½ï¿½Ôµï¿½ï¿½Ø¶ï¿½ï¿½ï¿½ï¿½Ô£ï¿½ï¿½ï¿½Ë²ï¿½ï¿½ï¿½Ö±ï¿½ï¿½Ç¨ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¡ï¿½ MEMO: ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Ç¶ï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½Ø·ï¿½ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¿ï¿½ï¿½Ç½ï¿½ï¿½ï¿½×ªï¿½ï¿½Ö§ï¿½ï¿½
 	 * 
 	 * @param obj
 	 * @param methodname
 	 * @param argnum 
 	 * @return
 	 */
-	private Method getMethod(Object obj, String methodname, int argnum) {
-		// TODO: convert object to Method
-		Method methods[] = obj.getClass().getMethods();
-		for(Method m1 : methods) {
-			if(! m1.getName().equals(methodname)) {
-				continue;
-			}
-			//method name match
-			logger.info("method name match."+methodname);
-			//ÕâÀïÖ»½øÐÐÒ»¸ö»ù±¾µÄÅÐ¶Ï£¬¾ÍÊÇ²ÎÊýµÄÊýÁ¿
-			//ÔÝÊ±²»¿¼ÂÇ½øÐÐÊý¾ÝÀàÐÍµÄ¶îÍâÅÐ¶Ï
-			if(m1.getParameterCount() == argnum) {
-				logger.info("find argnum match:"+argnum);
-				return m1;
-			}
-		}
-		logger.info("Cannot find match method.");
-		return null;
-	}
+//	private Method getMethod(Object obj, String methodname, int argnum) {
+//		// TODO: convert object to Method
+//		Method methods[] = obj.getClass().getMethods();
+//		for(Method m1 : methods) {
+//			if(! m1.getName().equals(methodname)) {
+//				continue;
+//			}
+//			//method name match
+//			logger.info("method name match."+methodname);
+//			//ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶Ï£ï¿½ï¿½ï¿½ï¿½Ç²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//			//ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Ç½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÍµÄ¶ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½
+//			if(m1.getParameterCount() == argnum) {
+//				logger.info("find argnum match:"+argnum);
+//				return m1;
+//			}
+//		}
+//		logger.info("Cannot find match method.");
+//		return null;
+//	}
 }

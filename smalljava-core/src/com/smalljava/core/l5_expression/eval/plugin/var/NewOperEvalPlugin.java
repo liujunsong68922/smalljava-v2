@@ -2,6 +2,7 @@ package com.smalljava.core.l5_expression.eval.plugin.var;
 
 import java.util.UUID;
 
+import com.smalljava.core.common.UUIDFunction;
 import com.smalljava.core.common.UuidObjectManager;
 import com.smalljava.core.common.VarValue;
 import com.smalljava.core.common.logging.Logger;
@@ -9,6 +10,7 @@ import com.smalljava.core.common.logging.LoggerFactory;
 import com.smalljava.core.l5_expression.eval.IExpressionEval;
 import com.smalljava.core.l5_expression.vo.RootAST;
 import com.smalljava.core.l5_expression.vo.var.NewOperElement;
+import com.smalljava.core.l6_vm.newinstance.NewInstancePluginManager;
 import com.smalljava.core.l9_space.classtable.IClassTable;
 import com.smalljava.core.l9_space.vartable.IVarTable;
 
@@ -18,7 +20,7 @@ public class NewOperEvalPlugin implements IExpressionEval {
 	@SuppressWarnings("rawtypes")
 	@Override
 	public VarValue eval(RootAST root, IVarTable vartable, IClassTable classtable) {
-		//nullÖµ¼ì²é
+		//nullÖµï¿½ï¿½ï¿½
 		if(root == null || vartable == null || classtable == null) {
 			return null;
 		}
@@ -26,26 +28,31 @@ public class NewOperEvalPlugin implements IExpressionEval {
 		if(root instanceof NewOperElement) {
 			NewOperElement newoper = (NewOperElement) root;
 			String classname = newoper.getClassname();
-			//µ÷ÓÃclasstableÀ´»ñÈ¡class
+			//ï¿½ï¿½ï¿½ï¿½classtableï¿½ï¿½ï¿½ï¿½È¡class
 			Class class1 = classtable.getClass(classname);
+			
+			NewInstancePluginManager manager = new NewInstancePluginManager();
+			
 			if(class1 == null) {
-				logger.error("¡¾ERROR¡¿ classname not found."+classname);
+				logger.error("ï¿½ï¿½ERRORï¿½ï¿½ classname not found."+classname);
 				return null;
 			}else {
 				try {
-					//ÀûÓÃÀàÀ´´´½¨¶ÔÏó
-					Object obj1 = class1.newInstance();
-					//Í¬Ê±Éú³ÉÒ»¸öÎ¨Ò»uuid£¬´ú±íÆäÒýÓÃÖµ
-					String uuid = UUID.randomUUID().toString().replaceAll("-","");
-					//¶ÔÏóÓëuuidÑ¹Èë¹«¹²¶ÔÏóÓ³Éä±íÖÐ
+					
+					//Object obj1 = class1.newInstance();
+					Object obj1 = manager.newInstance(classname);
+					
+					//String uuid = UUID.randomUUID().toString().replaceAll("-","");
+					UUIDFunction uuidf = new UUIDFunction();
+					String uuid = uuidf.uuid();
+					
 					UuidObjectManager.setObject(uuid, obj1);
-					//¹¹½¨·µ»Ø¶ÔÏó
 					VarValue vvalue = new VarValue();
 					vvalue.setVartype(classname);
 					vvalue.setVarsvalue(uuid);
 					return vvalue;
 				} catch (Exception e) {
-					logger.error("¡¾ERROR¡¿error when create new instance");
+					logger.error("ï¿½ï¿½ERRORï¿½ï¿½error when create new instance");
 					e.printStackTrace();
 					return null;
 				} 

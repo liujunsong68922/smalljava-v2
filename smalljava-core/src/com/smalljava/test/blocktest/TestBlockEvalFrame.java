@@ -32,6 +32,7 @@ import com.smalljava.core.l9_space.vartable.hashmapimpl.L2_HashMapClassInstanceV
 import com.smalljava.core.l9_space.vartable.hashmapimpl.L2_HashMapClassStaticVarTableImpl;
 import com.smalljava.core.l9_space.vartable.hashmapimpl.L3_HashMapMethodInstanceVarTableImpl;
 import com.smalljava.core.l9_space.vartable.hashmapimpl.L4_HashMapBlockVarTableImpl;
+import com.smalljava.swing.BasicBlockToTreeNode;
 //import com.smalljava.test.expresstest.TestMainFrame;
 
 public class TestBlockEvalFrame {
@@ -51,14 +52,14 @@ public class TestBlockEvalFrame {
 }
 
 class TestMainFrame extends JFrame {
-	private Label label1 = new Label("Õâ¸öÒ³ÃæÓÃÀ´²âÊÔSmallJavaµÄ(Block)´úÂë¿é½âÎöÓëÖ´ÐÐ¹¦ÄÜ.");
+	private Label label1 = new Label("smalljava block test frame.");
 
 	TestFrameButtonPanel buttonpanel = new TestFrameButtonPanel();
 
 	static JTextArea sourcecode = new JTextArea("");
 	static JTextArea asttree = new JTextArea("");
 
-	// °Ñ¶¨ÒåµÄJTextArea·Åµ½JScrollPaneÀïÃæÈ¥
+	// ï¿½Ñ¶ï¿½ï¿½ï¿½ï¿½JTextAreaï¿½Åµï¿½JScrollPaneï¿½ï¿½ï¿½ï¿½È¥
 	static JScrollPane scroll = new JScrollPane(asttree);
 
 	static JPanel treepanel = new JPanel();
@@ -80,7 +81,7 @@ class TestMainFrame extends JFrame {
 		sourcecode.setBorder(BorderFactory.createLineBorder(Color.green, 2));
 		sourcecode.setBounds(10, 100, 760, 80);
 
-		// ·Ö±ðÉèÖÃË®Æ½ºÍ´¹Ö±¹ö¶¯Ìõ×ÜÊÇ³öÏÖ
+		// ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½Ë®Æ½ï¿½Í´ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç³ï¿½ï¿½ï¿½
 		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		this.add(scroll);
@@ -164,13 +165,16 @@ class TestMainFrame extends JFrame {
 				System.out.println("");
 				System.out.println("");
 				closedblock.show(0);
-				System.out.println("·ÖÎö½á¹û£º"+isok);	
+				System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"+isok);	
 				
 				if(isok) {
 					String stext2 = closedblock.getShowString(0);
 					TestMainFrame.asttree.setText(stext2);
 					
-					DefaultMutableTreeNode node = closedblock.toTreeNode(0);
+					BasicBlockToTreeNode bbttree = new BasicBlockToTreeNode();
+					
+					DefaultMutableTreeNode node = bbttree.toTreeNode(closedblock,0);
+					
 					JTree tree = new JTree(node);
 					//TestMainFrame.rootnode.add(tree);
 					TestMainFrame.treepanel.removeAll();
@@ -181,7 +185,7 @@ class TestMainFrame extends JFrame {
 					System.out.println("create tree ok.");
 
 				}else {
-					TestMainFrame.asttree.setText("AST ½âÎöÊ§°Ü.");
+					TestMainFrame.asttree.setText("AST ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½.");
 				}
 			}
 		});
@@ -196,7 +200,7 @@ class TestMainFrame extends JFrame {
 				String stext = TestMainFrame.sourcecode.getText();
 				System.out.println("{" + stext + "}");
 				
-				//ÏÈ×öAST½Úµã·ÖÎö
+				//ï¿½ï¿½ï¿½ï¿½ASTï¿½Úµï¿½ï¿½ï¿½ï¿½
 				BasicBlock closedblock = new BasicBlock("",stext,null);
 				BlockAnalyse ba = new BlockAnalyse();
 
@@ -204,13 +208,15 @@ class TestMainFrame extends JFrame {
 				System.out.println("");
 				System.out.println("");
 				closedblock.show(0);
-				System.out.println("·ÖÎö½á¹û£º"+isok);	
+				System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"+isok);	
 				
 				if(isok) {
 					String stext2 = closedblock.getShowString(0);
 					TestMainFrame.asttree.setText(stext2);
 					
-					DefaultMutableTreeNode node = closedblock.toTreeNode(0);
+					BasicBlockToTreeNode bb1 = new BasicBlockToTreeNode();
+					
+					DefaultMutableTreeNode node = bb1.toTreeNode(closedblock,0);
 					JTree tree = new JTree(node);
 					//TestMainFrame.rootnode.add(tree);
 					TestMainFrame.treepanel.removeAll();
@@ -220,7 +226,7 @@ class TestMainFrame extends JFrame {
 					TestMainFrame.treepanel.repaint();
 					System.out.println("create tree ok.");
 
-					//ÏÖÔÚ¿ªÊ¼½øÐÐblock¿éµÄÆÀ¹À¼ÆËã¹¤×÷
+					//ï¿½ï¿½ï¿½Ú¿ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½blockï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã¹¤ï¿½ï¿½
 					BlockEvaluator node1 = new BlockEvaluator();
 					ClassTableImpl classtable = new ClassTableImpl();
 
@@ -231,7 +237,7 @@ class TestMainFrame extends JFrame {
 					L4_HashMapBlockVarTableImpl vartable4 = new L4_HashMapBlockVarTableImpl("",vartable3);
 					try {
 						boolean b2 = node1.execute(closedblock,vartable4,classtable);
-						System.out.println("¼ÆËã½áÊø£¡½á¹û£º"+b2);
+						System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"+b2);
 						System.out.println("");
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
@@ -239,7 +245,7 @@ class TestMainFrame extends JFrame {
 					}
 
 				}else {
-					TestMainFrame.asttree.setText("AST ½âÎöÊ§°Ü.");
+					TestMainFrame.asttree.setText("AST ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½.");
 				}
 			}
 		});
@@ -262,8 +268,8 @@ class TestFrameButtonPanel extends JPanel {
 	static String stext5 = "int i; i = 1; if(i<2) {i = 1+1;}";
 	static String stext6 = "int i; while(i<10) { i = i+1;} ";
 
-	JButton analysebutton = new JButton("Analyse(Óï·¨·ÖÎö)");
-	JButton evalbutton = new JButton("Eval(Ö´ÐÐ)");
+	JButton analysebutton = new JButton("Analyse(ï¿½ï·¨ï¿½ï¿½ï¿½ï¿½)");
+	JButton evalbutton = new JButton("Eval(Ö´ï¿½ï¿½)");
 
 	public TestFrameButtonPanel() {
 		this.add(b1);

@@ -29,6 +29,7 @@ import com.smalljava.core.l9_space.vartable.hashmapimpl.L2_HashMapClassInstanceV
 import com.smalljava.core.l9_space.vartable.hashmapimpl.L2_HashMapClassStaticVarTableImpl;
 import com.smalljava.core.l9_space.vartable.hashmapimpl.L3_HashMapMethodInstanceVarTableImpl;
 import com.smalljava.core.l9_space.vartable.hashmapimpl.L4_HashMapBlockVarTableImpl;
+import com.smalljava.swing.RootASTToTreeNode;
 
 public class TestExpressEvalFrame {
 	private static TestMainFrame mainframe = new TestMainFrame();
@@ -173,7 +174,8 @@ class TestMainFrame extends JFrame {
 					System.out.println(s1);
 					TestMainFrame.asttree.setText(s1);
 					
-					DefaultMutableTreeNode node = root.toTreeNode(0);
+					RootASTToTreeNode tonode2 = new RootASTToTreeNode();
+					DefaultMutableTreeNode node = tonode2.toTreeNode(root,0);
 					JTree tree = new JTree(node);
 					//TestMainFrame.rootnode.add(tree);
 					TestMainFrame.treepanel.removeAll();

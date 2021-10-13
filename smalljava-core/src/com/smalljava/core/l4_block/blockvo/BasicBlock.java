@@ -4,7 +4,7 @@ import java.util.ArrayList;
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
 
-import javax.swing.tree.DefaultMutableTreeNode;
+//import javax.swing.tree.DefaultMutableTreeNode;
 
 import com.smalljava.core.common.logging.Logger;
 import com.smalljava.core.common.logging.LoggerFactory;
@@ -22,12 +22,12 @@ public class BasicBlock {
 	/**
 	 * 块的类型，在Analyse的时候赋值，在Eval的时候作为参考，默认为空
 	 */
-	private String blocktype;
+	public String blocktype;
 
 	/**
 	 * 要进行分析的字符串
 	 */
-	private String blockContent;
+	public String blockContent;
 
 	/**
 	 * block计算的中间计算用变量
@@ -42,7 +42,7 @@ public class BasicBlock {
 	/**
 	 * 子节点定义
 	 */
-	private ArrayList<BasicBlock> children;
+	public ArrayList<BasicBlock> children;
 
 	/**
 	 * classVarTable代表的是class级别（Object级别的变量表)
@@ -265,54 +265,54 @@ public class BasicBlock {
 		return sret;
 	}
 
-	public DefaultMutableTreeNode toTreeNode(int ilevel) {
-		{
-			DefaultMutableTreeNode retTreeNode = new DefaultMutableTreeNode("");
-			if (this.children == null) {
-				return retTreeNode;
-			}
-			// logger.error(this.getClass().getSimpleName());
-			String blockname = this.getClass().getSimpleName();
-			if (this.blocktype != null && this.blocktype.length() > 0) {
-				blockname = this.blocktype;
-			}
-			String strleft = "";
-			for (int i = 0; i < ilevel; i++) {
-				strleft += "    ";
-			}
-
-			if (this.children.size() == 0) {
-				if (this instanceof MethodBlock) {
-					MethodBlock mb = (MethodBlock) this;
-					logger.error(strleft + "---->" + blockname + " --> " + mb.getMethodname() + " : "
-							+ mb.getMethodcontent());
-					// sret += "\r\n";
-					// sret += (strleft + "---->" + blockname + " --> " + mb.getMethodname()+" : " +
-					// mb.getMethodcontent());
-					retTreeNode = new DefaultMutableTreeNode(strleft + "---->" + blockname + " --> "
-							+ mb.getMethodname() + " : " + mb.getMethodcontent());
-				} else {
-					logger.error(strleft + "---->" + blockname + ":" + this.blockContent);
-					// sret += "\r\n";
-					// sret += (strleft + "---->" + blockname + ":" + this.blockContent);
-					retTreeNode = new DefaultMutableTreeNode(strleft + "---->" + blockname + ":" + this.blockContent);
-				}
-				return retTreeNode;
-			} else {
-				logger.error(strleft + "---->" + blockname);
-				// sret += "\r\n";
-				// sret += (strleft + "---->" + blockname);
-				retTreeNode = new DefaultMutableTreeNode(strleft + "---->" + blockname);
-			}
-
-			for (BasicBlock child : this.children) {
-				// String s1 = child.getShowString(ilevel + 1);
-				// sret += s1;
-				DefaultMutableTreeNode childnode = child.toTreeNode(ilevel + 1);
-				retTreeNode.add(childnode);
-			}
-			// return sret;
-			return retTreeNode;
-		}
-	}
+//	public DefaultMutableTreeNode toTreeNode(int ilevel) {
+//		{
+//			DefaultMutableTreeNode retTreeNode = new DefaultMutableTreeNode("");
+//			if (this.children == null) {
+//				return retTreeNode;
+//			}
+//			// logger.error(this.getClass().getSimpleName());
+//			String blockname = this.getClass().getSimpleName();
+//			if (this.blocktype != null && this.blocktype.length() > 0) {
+//				blockname = this.blocktype;
+//			}
+//			String strleft = "";
+//			for (int i = 0; i < ilevel; i++) {
+//				strleft += "    ";
+//			}
+//
+//			if (this.children.size() == 0) {
+//				if (this instanceof MethodBlock) {
+//					MethodBlock mb = (MethodBlock) this;
+//					logger.error(strleft + "---->" + blockname + " --> " + mb.getMethodname() + " : "
+//							+ mb.getMethodcontent());
+//					// sret += "\r\n";
+//					// sret += (strleft + "---->" + blockname + " --> " + mb.getMethodname()+" : " +
+//					// mb.getMethodcontent());
+//					retTreeNode = new DefaultMutableTreeNode(strleft + "---->" + blockname + " --> "
+//							+ mb.getMethodname() + " : " + mb.getMethodcontent());
+//				} else {
+//					logger.error(strleft + "---->" + blockname + ":" + this.blockContent);
+//					// sret += "\r\n";
+//					// sret += (strleft + "---->" + blockname + ":" + this.blockContent);
+//					retTreeNode = new DefaultMutableTreeNode(strleft + "---->" + blockname + ":" + this.blockContent);
+//				}
+//				return retTreeNode;
+//			} else {
+//				logger.error(strleft + "---->" + blockname);
+//				// sret += "\r\n";
+//				// sret += (strleft + "---->" + blockname);
+//				retTreeNode = new DefaultMutableTreeNode(strleft + "---->" + blockname);
+//			}
+//
+//			for (BasicBlock child : this.children) {
+//				// String s1 = child.getShowString(ilevel + 1);
+//				// sret += s1;
+//				DefaultMutableTreeNode childnode = child.toTreeNode(ilevel + 1);
+//				retTreeNode.add(childnode);
+//			}
+//			// return sret;
+//			return retTreeNode;
+//		}
+//	}
 }

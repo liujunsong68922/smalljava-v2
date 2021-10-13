@@ -26,10 +26,17 @@ public class Logger {
 		}else {
 			log2("",s);
 		}
+
 	}
 	
-	public static void log2(String prefix,String s) {
+	public void log2(String prefix,String s) {
 		System.out.println("["+prefix+"]: "+s);
+		try {
+			consoleLog("["+prefix+"]: "+s);
+		}catch(Error e) {
+			//catach special error,
+			//if this function is unsupported,just return.
+		}
 	}
 
 	public void info(String string) {
@@ -52,4 +59,9 @@ public class Logger {
 		e.printStackTrace();
 		
 	}
+	
+	public native void consoleLog(String message) /*-{
+	//alert(message);
+	console.log( "[ExpressionEval]:" + message );
+	}-*/;
 }
