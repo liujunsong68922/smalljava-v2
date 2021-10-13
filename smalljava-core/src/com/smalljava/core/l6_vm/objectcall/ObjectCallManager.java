@@ -3,12 +3,15 @@ package com.smalljava.core.l6_vm.objectcall;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.smalljava.core.l6_vm.objectcall.plugin.HashMapObjectCallPlugin;
+
 public class ObjectCallManager implements IObjectCall {
 	public static HashMap<String,IObjectCall> callersmap = new HashMap<String,IObjectCall>();
 	
 	public ObjectCallManager() {
 		if(callersmap.size()==0) {
 			//init map itself.
+			callersmap.put("HashMap", new HashMapObjectCallPlugin());
 		}
 	}
 
